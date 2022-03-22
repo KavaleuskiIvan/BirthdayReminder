@@ -97,4 +97,16 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
         return 100
     }
 }
-
+    // MARK: Constraints
+extension TableOfBirthdaysViewController {
+    func addSubviews() {
+        view.addSubview(tableView)
+    }
+    func setupTableView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+}
