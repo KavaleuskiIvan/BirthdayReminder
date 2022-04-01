@@ -31,13 +31,15 @@ class TableOfBirthdaysViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        fetchPersons()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            self.fetchPersons()
+            self.tableView.reloadData()
+        }
     }
     
     func launchAddButton() {
@@ -95,6 +97,11 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        detailViewController.person = persons[indexPath.row]
+        navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
     // MARK: Constraints

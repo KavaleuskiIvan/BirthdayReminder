@@ -2,7 +2,7 @@
 //  Person+CoreDataClass.swift
 //  BirthdayReminder
 //
-//  Created by Kavaleuski Ivan on 19/03/2022.
+//  Created by Kavaleuski Ivan on 01/04/2022.
 //
 //
 
