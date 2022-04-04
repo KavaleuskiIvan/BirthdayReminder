@@ -143,7 +143,8 @@ class AddingBirthdayViewController: UIViewController {
             }
         }
     }
-
+    
+    // MARK: Database function
     func savePerson(completion: (_ finished: Bool) -> ()) {
         
         let context = appDelegate.persistentContainer.viewContext

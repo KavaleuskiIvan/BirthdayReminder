@@ -12,6 +12,7 @@ class DetailViewController: UIViewController {
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var person: Person?
+    var personID: UUID = UUID()
     
     let personsPhoto: UIImageView = {
         let image = UIImageView()
@@ -75,6 +76,7 @@ class DetailViewController: UIViewController {
         addSubviews()
         setupConstraints()
         
+        fetchPerson()
         setupInformation()
         
         launchBackButton()
@@ -82,7 +84,7 @@ class DetailViewController: UIViewController {
     }
     
     func setupInformation() {
-        if let image = UIImage(data: (person?.image)!) {
+        if let image = UIImage().create(data: person?.image) {
             personsPhoto.image = image
         }
         personsNameTextLabel.text = person?.name ?? ""
@@ -94,8 +96,8 @@ class DetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
     }
     @objc func backButtonPressed() {
+        updatePerson()
         navigationController?.popViewController(animated: true)
-        // Should be core data save
     }
     
     func launchSettingsButton() {
@@ -103,19 +105,23 @@ class DetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = settingsButton
     }
     @objc func settingsButtonPressed() {
-        let settingsAlert = UIAlertController(title: "Settings", message: "Choose to change", preferredStyle: .actionSheet)
+        let settingsAlert = UIAlertController(title: "Settings", message: "Pick to change", preferredStyle: .actionSheet)
         // Alert for changing photo
         settingsAlert.addAction(UIAlertAction(title: "Change Photo", style: .default, handler: { _ in
             let alert: UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
-            let cameraAction = UIAlertAction(title: "Camera", style: UIAlertAction.Style.default) { _ in
+            let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
                 self.openCamera()
             }
-            let gallaryAction = UIAlertAction(title: "Gallery", style: UIAlertAction.Style.default) { _ in
+            let gallaryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
                 self.openGallery()
+            }
+            let defaultAction = UIAlertAction(title: "Set default image", style: .default) { _ in
+                self.personsPhoto.image = UIImage(named: "default-user-image")
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
             alert.addAction(cameraAction)
             alert.addAction(gallaryAction)
+            alert.addAction(defaultAction)
             alert.addAction(cancelAction)
             self.present(alert, animated: true, completion: nil)
         }))
@@ -126,11 +132,13 @@ class DetailViewController: UIViewController {
             changeNameAlert.addTextField(configurationHandler: { textField in
                 textField.text = self.personsNameTextLabel.text
             })
-            changeNameAlert.addAction(UIAlertAction(title: "Save", style: .default, handler: { _ in
+            let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
                 let text = changeNameAlert.textFields?.first?.text
                 self.personsNameTextLabel.text = text
-            }))
-            changeNameAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
+            changeNameAlert.addAction(saveAction)
+            changeNameAlert.addAction(cancelAction)
             self.present(changeNameAlert, animated: true, completion: nil)
         }))
         
@@ -141,20 +149,31 @@ class DetailViewController: UIViewController {
             //Constraints to datePicker
             changeDateAlert.view.addSubview(self.datePicker)
             changeDateAlert.view.heightAnchor.constraint(equalToConstant: 400).isActive = true
-            self.datePicker.heightAnchor.constraint(equalTo: changeDateAlert.view.heightAnchor, constant: -40).isActive = true
+            self.datePicker.heightAnchor.constraint(equalTo: changeDateAlert.view.heightAnchor, constant: -80).isActive = true
             self.datePicker.widthAnchor.constraint(equalTo: changeDateAlert.view.widthAnchor, constant: -10).isActive = true
             self.datePicker.centerYAnchor.constraint(equalTo: changeDateAlert.view.centerYAnchor).isActive = true
             
-            changeDateAlert.addAction(UIAlertAction(title: "Save", style: .default, handler: { _ in
+            let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
                 let text = self.datePicker.date.toString(dateFormat: "dd-MM-yyyy")
                 self.personsDayOfBirthdayTextLabel.text = text
-            }))
-            changeDateAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
+            changeDateAlert.addAction(saveAction)
+            changeDateAlert.addAction(cancelAction)
             self.present(changeDateAlert, animated: true, completion: nil)
         }))
         
+        // Alert for deleting person
         settingsAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-            // Core data delete should be here
+            let deleteAlert = UIAlertController(title: "You want to delete this person?", message: "", preferredStyle: .alert)
+            let acceptAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+                self.deletePerson()
+                self.navigationController?.popViewController(animated: true)
+            })
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
+            deleteAlert.addAction(acceptAction)
+            deleteAlert.addAction(cancelAction)
+            self.present(deleteAlert, animated: true, completion: nil)
         }))
         
         settingsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
@@ -177,6 +196,45 @@ class DetailViewController: UIViewController {
             present(imagePickerController, animated: true, completion: nil)
         } else {
             print("Error Camera")
+        }
+    }
+    // MARK: Database functions
+    func fetchPerson() {
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
+        fetchRequest.predicate = NSPredicate(format: "id = %@", personID.uuidString)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            person = results.first
+        } catch {
+            print("🔴Could not fetch: \(error.localizedDescription)")
+        }
+    }
+    func updatePerson() {
+        let context = appDelegate.persistentContainer.viewContext
+        guard let _person = person else { return }
+        
+        _person.setValue(personsNameTextLabel.text, forKey: "name")
+        _person.setValue(personsDayOfBirthdayTextLabel.text?.toDate(withFormat: "dd-MM-yyyy"), forKey: "dayOfBirthday")
+        _person.setValue(personsPhoto.image?.jpegData(compressionQuality: 1), forKey: "image")
+        
+        do {
+            try context.save()
+        } catch {
+            print("🔴Could not save while delete: \(error.localizedDescription)")
+        }
+    }
+    func deletePerson() {
+        let context = appDelegate.persistentContainer.viewContext
+        guard let _person = person else { return }
+        context.delete(_person)
+        
+        do {
+            try context.save()
+        } catch {
+            print("🔴Could not save while delete: \(error.localizedDescription)")
         }
     }
 }

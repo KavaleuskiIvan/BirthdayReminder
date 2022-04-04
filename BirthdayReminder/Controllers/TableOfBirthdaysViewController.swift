@@ -51,7 +51,7 @@ class TableOfBirthdaysViewController: UIViewController {
         let addingBirthdayVC = AddingBirthdayViewController()
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
     }
-
+    // MARK: Database functions
     func fetchPersons() {
         let context = appDelegate.persistentContainer.viewContext
         
@@ -75,7 +75,7 @@ class TableOfBirthdaysViewController: UIViewController {
     }
 }
 
-// MARK: - Table view data source
+    // MARK: - Table view data source
 extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,7 +100,8 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailViewController = DetailViewController()
-        detailViewController.person = persons[indexPath.row]
+        guard let personsId = persons[indexPath.row].id else { return }
+        detailViewController.personID = personsId
         navigationController?.pushViewController(detailViewController, animated: true)
     }
 }

@@ -58,22 +58,24 @@ class UserTableViewCell: UITableViewCell {
             personsPhoto.image = image
         }
         personsName.text = person.name
-        personsAge.text = String(calculateAge(birthday: person.dayOfBirthday!))
-        
-        let days = calculateDaysLeft(birthday: person.dayOfBirthday!)
-        
-        let calendar = Calendar.current
-        let ageComponents = calendar.dateComponents([.year], from: .now)
-        var status = ""
-        if (ageComponents.isLeapMonth ?? false && days == 366) {
-            status = "Happy Birthday"
-        } else if (!ageComponents.isLeapMonth! && days == 365) {
-            status = "Happy Birthday"
-        } else {
-            status = "\(days) days left"
+        if let date = person.dayOfBirthday {
+            personsAge.text = String(calculateAge(birthday: date))
+            
+            let days = calculateDaysLeft(birthday: date)
+            
+            let calendar = Calendar.current
+            let ageComponents = calendar.dateComponents([.year], from: .now)
+            var status = ""
+            if (ageComponents.isLeapMonth ?? false && days == 366) {
+                status = "Happy Birthday"
+            } else if (!ageComponents.isLeapMonth! && days == 365) {
+                status = "Happy Birthday"
+            } else {
+                status = "\(days) days left"
+            }
+            
+            personsDayOfBirthday.text = "\(person.dayOfBirthday?.toString(dateFormat: "dd-MM-yyyy") ?? ""),  \(status)"
         }
-        
-        personsDayOfBirthday.text = "\(person.dayOfBirthday?.toString(dateFormat: "dd-MM-yyyy") ?? ""),  \(status)"
     }
     
     func addSubviews() {

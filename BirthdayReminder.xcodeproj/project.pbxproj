@@ -22,6 +22,7 @@
 		C862440827F64856006A5B4E /* ForUIimage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440727F64855006A5B4E /* ForUIimage.swift */; };
 		C862440B27F72CE0006A5B4E /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */; };
 		C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */; };
+		C862440E27FA394F006A5B4E /* ForString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440D27FA394F006A5B4E /* ForString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		C862440727F64855006A5B4E /* ForUIimage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForUIimage.swift; sourceTree = "<group>"; };
 		C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C862440D27FA394F006A5B4E /* ForString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForString.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +124,7 @@
 				C86243EB27E53F2D006A5B4E /* ForUITextField.swift */,
 				C86243F727F30FD4006A5B4E /* ForUIViewController.swift */,
 				C862440727F64855006A5B4E /* ForUIimage.swift */,
+				C862440D27FA394F006A5B4E /* ForString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -204,6 +207,7 @@
 				C83EBF8027D2376B00DDE299 /* BirthdayReminder.xcdatamodeld in Sources */,
 				C83A547E278DC0F200E88F83 /* AddingBirthdayViewController.swift in Sources */,
 				C862440B27F72CE0006A5B4E /* Person+CoreDataClass.swift in Sources */,
+				C862440E27FA394F006A5B4E /* ForString.swift in Sources */,
 				C83A546A278DA83100E88F83 /* SceneDelegate.swift in Sources */,
 				C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */,
 				C86243EA27E53665006A5B4E /* ForDate.swift in Sources */,
