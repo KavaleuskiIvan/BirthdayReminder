@@ -23,6 +23,7 @@
 		C862440B27F72CE0006A5B4E /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */; };
 		C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */; };
 		C862440E27FA394F006A5B4E /* ForString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440D27FA394F006A5B4E /* ForString.swift */; };
+		C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440F27FCD911006A5B4E /* CellsProtocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C862440D27FA394F006A5B4E /* ForString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForString.swift; sourceTree = "<group>"; };
+		C862440F27FCD911006A5B4E /* CellsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsProtocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				C83A547F279038F500E88F83 /* UserTableViewCell.swift */,
+				C862440F27FCD911006A5B4E /* CellsProtocols.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -213,6 +216,7 @@
 				C86243EA27E53665006A5B4E /* ForDate.swift in Sources */,
 				C86243EC27E53F2D006A5B4E /* ForUITextField.swift in Sources */,
 				C83A5480279038F500E88F83 /* UserTableViewCell.swift in Sources */,
+				C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

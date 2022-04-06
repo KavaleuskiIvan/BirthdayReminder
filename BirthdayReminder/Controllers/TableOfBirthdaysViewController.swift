@@ -30,7 +30,7 @@ class TableOfBirthdaysViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
         tableView.separatorStyle = .none
     }
     
@@ -82,7 +82,7 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
         return persons.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
         let _persons = persons[indexPath.row]
         cell.updateUI(person: _persons)
         return cell
@@ -106,7 +106,7 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
     }
 }
     // MARK: Constraints
-extension TableOfBirthdaysViewController {
+private extension TableOfBirthdaysViewController {
     func addSubviews() {
         view.addSubview(tableView)
     }

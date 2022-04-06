@@ -107,51 +107,53 @@ class DetailViewController: UIViewController {
     @objc func settingsButtonPressed() {
         let settingsAlert = UIAlertController(title: "Settings", message: "Pick to change", preferredStyle: .actionSheet)
         // Alert for changing photo
-        settingsAlert.addAction(UIAlertAction(title: "Change Photo", style: .default, handler: { _ in
+        settingsAlert.addAction(UIAlertAction(title: "Change Photo", style: .default, handler: { [weak self] _ in
             let alert: UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
             let cameraAction = UIAlertAction(title: "Camera", style: .default) { _ in
-                self.openCamera()
+                self?.openCamera()
             }
             let gallaryAction = UIAlertAction(title: "Gallery", style: .default) { _ in
-                self.openGallery()
+                self?.openGallery()
             }
             let defaultAction = UIAlertAction(title: "Set default image", style: .default) { _ in
-                self.personsPhoto.image = UIImage(named: "default-user-image")
+                self?.personsPhoto.image = UIImage(named: "default-user-image")
             }
             let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
             alert.addAction(cameraAction)
             alert.addAction(gallaryAction)
             alert.addAction(defaultAction)
             alert.addAction(cancelAction)
-            self.present(alert, animated: true, completion: nil)
+            self?.present(alert, animated: true, completion: nil)
         }))
         
         // Alert for changing name
-        settingsAlert.addAction(UIAlertAction(title: "Change Name", style: .default, handler: { _ in
+        settingsAlert.addAction(UIAlertAction(title: "Change Name", style: .default, handler: { [weak self] _ in
             let changeNameAlert = UIAlertController(title: "Enter name", message: "", preferredStyle: .alert)
             changeNameAlert.addTextField(configurationHandler: { textField in
-                textField.text = self.personsNameTextLabel.text
+                textField.text = self?.personsNameTextLabel.text
             })
             let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
                 let text = changeNameAlert.textFields?.first?.text
-                self.personsNameTextLabel.text = text
+                self?.personsNameTextLabel.text = text
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
             changeNameAlert.addAction(saveAction)
             changeNameAlert.addAction(cancelAction)
-            self.present(changeNameAlert, animated: true, completion: nil)
+            self?.present(changeNameAlert, animated: true, completion: nil)
         }))
         
         // Alert for changing date
-        settingsAlert.addAction(UIAlertAction(title: "Change Date", style: .default, handler: { _ in
+        settingsAlert.addAction(UIAlertAction(title: "Change Date", style: .default, handler: { [weak self] _ in
             let changeDateAlert = UIAlertController(title: "Enter date", message: "", preferredStyle: .alert)
             
             //Constraints to datePicker
+            guard let self = self else { return }
             changeDateAlert.view.addSubview(self.datePicker)
             changeDateAlert.view.heightAnchor.constraint(equalToConstant: 400).isActive = true
             self.datePicker.heightAnchor.constraint(equalTo: changeDateAlert.view.heightAnchor, constant: -80).isActive = true
             self.datePicker.widthAnchor.constraint(equalTo: changeDateAlert.view.widthAnchor, constant: -10).isActive = true
             self.datePicker.centerYAnchor.constraint(equalTo: changeDateAlert.view.centerYAnchor).isActive = true
+            
             
             let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
                 let text = self.datePicker.date.toString(dateFormat: "dd-MM-yyyy")
@@ -164,20 +166,20 @@ class DetailViewController: UIViewController {
         }))
         
         // Alert for deleting person
-        settingsAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
+        settingsAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             let deleteAlert = UIAlertController(title: "You want to delete this person?", message: "", preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-                self.deletePerson()
-                self.navigationController?.popViewController(animated: true)
+                self?.deletePerson()
+                self?.navigationController?.popViewController(animated: true)
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
             deleteAlert.addAction(acceptAction)
             deleteAlert.addAction(cancelAction)
-            self.present(deleteAlert, animated: true, completion: nil)
+            self?.present(deleteAlert, animated: true, completion: nil)
         }))
         
         settingsAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
-        self.present(settingsAlert, animated: true, completion: nil)
+        present(settingsAlert, animated: true, completion: nil)
     }
     func openGallery() {
         let imagePickerController = UIImagePickerController()
@@ -199,7 +201,7 @@ class DetailViewController: UIViewController {
         }
     }
     // MARK: Database functions
-    func fetchPerson() {
+    func fetchPerson(){
         let context = appDelegate.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
@@ -250,7 +252,7 @@ extension DetailViewController: UIImagePickerControllerDelegate, UINavigationCon
 }
 
 //MARK: Constraints
-extension DetailViewController {
+private extension DetailViewController {
     func addSubviews() {
         view.addSubview(personsPhoto)
         view.addSubview(personsNameView)

@@ -7,9 +7,9 @@
 
 import UIKit
 
+extension UserTableViewCell: ReusableView { }
+
 class UserTableViewCell: UITableViewCell {
-    
-    static let identifier = "CustomCellIdentifier"
     
     let personsPhoto: UIImageView = {
         let image = UIImageView()
@@ -60,21 +60,21 @@ class UserTableViewCell: UITableViewCell {
         personsName.text = person.name
         if let date = person.dayOfBirthday {
             personsAge.text = String(calculateAge(birthday: date))
-            
-            let days = calculateDaysLeft(birthday: date)
-            
-            let calendar = Calendar.current
-            let ageComponents = calendar.dateComponents([.year], from: .now)
-            var status = ""
-            if (ageComponents.isLeapMonth ?? false && days == 366) {
-                status = "Happy Birthday"
-            } else if (!ageComponents.isLeapMonth! && days == 365) {
-                status = "Happy Birthday"
-            } else {
-                status = "\(days) days left"
-            }
-            
-            personsDayOfBirthday.text = "\(person.dayOfBirthday?.toString(dateFormat: "dd-MM-yyyy") ?? ""),  \(status)"
+            personsDayOfBirthday.text = "\(date.toString(dateFormat: "dd-MM-yyyy")),  \(checkIfBirthday(date: date))"
+        }
+    }
+    
+    func checkIfBirthday(date: Date) -> String {
+        let days = calculateDaysLeft(birthday: date)
+        
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: .now)
+        if (ageComponents.isLeapMonth ?? false && days == 366) {
+            return "Happy Birthday"
+        } else if (!ageComponents.isLeapMonth! && days == 365) {
+            return "Happy Birthday"
+        } else {
+            return "\(days) days left"
         }
     }
     
@@ -108,7 +108,7 @@ class UserTableViewCell: UITableViewCell {
 }
 
     // MARK: Constraints
-extension UserTableViewCell {
+private extension UserTableViewCell {
     func addCornerRadius(name: UIView) {
         name.layoutIfNeeded()
         name.layer.cornerRadius = name.frame.height/1.5

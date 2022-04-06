@@ -95,11 +95,11 @@ class AddingBirthdayViewController: UIViewController {
     
     @objc func personsPhotoChangeButtonPressed() {
         let alert: UIAlertController = UIAlertController(title: "Choose Image", message: nil, preferredStyle: UIAlertController.Style.actionSheet)
-        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertAction.Style.default) { _ in
-            self.openCamera()
+        let cameraAction = UIAlertAction(title: "Camera", style: UIAlertAction.Style.default) { [weak self] _ in
+            self?.openCamera()
         }
-        let gallaryAction = UIAlertAction(title: "Gallery", style: UIAlertAction.Style.default) { _ in
-            self.openGallery()
+        let gallaryAction = UIAlertAction(title: "Gallery", style: UIAlertAction.Style.default) { [weak self] _ in
+            self?.openGallery()
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel)
         alert.addAction(cameraAction)
@@ -182,7 +182,7 @@ extension AddingBirthdayViewController: UIImagePickerControllerDelegate, UINavig
 }
 
     // MARK: Constraints
-extension AddingBirthdayViewController  {
+private extension AddingBirthdayViewController  {
     func addSubviews() {
         view.addSubview(personsPhoto)
         view.addSubview(personsPhotoChangeButton)
