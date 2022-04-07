@@ -10,8 +10,6 @@ import CoreData
 
 class AddingBirthdayViewController: UIViewController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .lightGray
@@ -135,16 +133,22 @@ class AddingBirthdayViewController: UIViewController {
 
     // Setup add information button
     @objc func addButtonAction() {
-        if nameTF.text != "" {
-            savePerson { finished in
-                if finished {
-                    navigationController?.popViewController(animated: true)
-                }
-            }
+        if nameTF.text != ""{
+            //            savePerson { finished in
+            //                if finished {
+            //                    navigationController?.popViewController(animated: true)
+            //                }
+            //            }
+            PersonsCoreDataManager.shared.savePerson(personName: nameTF.text ?? "",
+                                                     persondayOfBirthday: datePicker.date,
+                                                     personImage: personsPhoto.image!)
+            
+            navigationController?.popViewController(animated: true)
         }
     }
     
     // MARK: Database function
+    /*
     func savePerson(completion: (_ finished: Bool) -> ()) {
         
         let context = appDelegate.persistentContainer.viewContext
@@ -165,7 +169,7 @@ class AddingBirthdayViewController: UIViewController {
             print(error.localizedDescription)
             completion(false)
         }
-    }
+    }*/
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)

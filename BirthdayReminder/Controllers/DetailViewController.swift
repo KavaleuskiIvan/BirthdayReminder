@@ -10,7 +10,6 @@ import CoreData
 
 class DetailViewController: UIViewController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var person: Person?
     var personID: UUID = UUID()
     
@@ -18,6 +17,7 @@ class DetailViewController: UIViewController {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.backgroundColor = .lightGray
+        image.image = UIImage(named: "default-user-image")
         return image
     }()
     
@@ -76,7 +76,15 @@ class DetailViewController: UIViewController {
         addSubviews()
         setupConstraints()
         
-        fetchPerson()
+//        fetchPerson()
+        PersonsCoreDataManager.shared.fetchPerson(withID: personID) { [weak self] result in
+            switch result {
+            case .success(let _person):
+                self?.person = _person
+            case .failure(let error):
+                print(error)
+            }
+        }
         setupInformation()
         
         launchBackButton()
@@ -96,7 +104,11 @@ class DetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
     }
     @objc func backButtonPressed() {
-        updatePerson()
+//        updatePerson()
+        PersonsCoreDataManager.shared.updatePerson(person: person,
+                                                   name: personsNameTextLabel.text ?? "",
+                                                   dayOfBirthday: personsDayOfBirthdayTextLabel.text?.toDate(withFormat: "dd-MM-yyyy") ?? .now,
+                                                   image: personsPhoto.image!)
         navigationController?.popViewController(animated: true)
     }
     
@@ -169,7 +181,8 @@ class DetailViewController: UIViewController {
         settingsAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             let deleteAlert = UIAlertController(title: "You want to delete this person?", message: "", preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-                self?.deletePerson()
+//                self?.deletePerson()
+                PersonsCoreDataManager.shared.deletePerson(person: self?.person)
                 self?.navigationController?.popViewController(animated: true)
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in })
@@ -201,6 +214,7 @@ class DetailViewController: UIViewController {
         }
     }
     // MARK: Database functions
+    /*
     func fetchPerson(){
         let context = appDelegate.persistentContainer.viewContext
         
@@ -238,7 +252,7 @@ class DetailViewController: UIViewController {
         } catch {
             print("🔴Could not save while delete: \(error.localizedDescription)")
         }
-    }
+    }*/
 }
 
 // MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate

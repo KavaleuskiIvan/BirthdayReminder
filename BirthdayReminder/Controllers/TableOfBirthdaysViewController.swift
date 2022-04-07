@@ -11,8 +11,6 @@ import CoreData
 
 class TableOfBirthdaysViewController: UIViewController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     let tableView = UITableView()
     
     var persons:[Person] = []
@@ -37,7 +35,15 @@ class TableOfBirthdaysViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
-            self.fetchPersons()
+//            self.fetchPersons()
+            PersonsCoreDataManager.shared.fetchPersons { [weak self] result in
+                switch result {
+                case .success(let _persons):
+                    self?.persons = _persons
+                case .failure(let error):
+                    print(error)
+                }
+            }
             self.tableView.reloadData()
         }
     }
@@ -52,6 +58,7 @@ class TableOfBirthdaysViewController: UIViewController {
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
     }
     // MARK: Database functions
+    /*
     func fetchPersons() {
         let context = appDelegate.persistentContainer.viewContext
         
@@ -72,7 +79,7 @@ class TableOfBirthdaysViewController: UIViewController {
         } catch {
             print("🔴Could not save while delete: \(error.localizedDescription)")
         }
-    }
+    }*/
 }
 
     // MARK: - Table view data source
@@ -90,8 +97,17 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.deletePersons(atIndexPath: indexPath)
-            self.fetchPersons()
+            PersonsCoreDataManager.shared.deletePersons(personsArray: persons, atIndexPath: indexPath)
+            PersonsCoreDataManager.shared.fetchPersons { [weak self] result in
+                switch result {
+                case .success(let _persons):
+                    self?.persons = _persons
+                case .failure(let error):
+                    print(error)
+                }
+            }
+//            self.deletePersons(atIndexPath: indexPath)
+//            self.fetchPersons()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

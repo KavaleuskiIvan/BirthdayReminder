@@ -24,6 +24,7 @@
 		C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */; };
 		C862440E27FA394F006A5B4E /* ForString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440D27FA394F006A5B4E /* ForString.swift */; };
 		C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440F27FCD911006A5B4E /* CellsProtocols.swift */; };
+		C862441227FF0D8B006A5B4E /* PersonsCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C862440D27FA394F006A5B4E /* ForString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForString.swift; sourceTree = "<group>"; };
 		C862440F27FCD911006A5B4E /* CellsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsProtocols.swift; sourceTree = "<group>"; };
+		C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsCoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 			children = (
 				C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */,
 				C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */,
+				C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				C86243EC27E53F2D006A5B4E /* ForUITextField.swift in Sources */,
 				C83A5480279038F500E88F83 /* UserTableViewCell.swift in Sources */,
 				C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */,
+				C862441227FF0D8B006A5B4E /* PersonsCoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
