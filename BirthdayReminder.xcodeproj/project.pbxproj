@@ -17,8 +17,14 @@
 		C83EBF8027D2376B00DDE299 /* BirthdayReminder.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C83EBF7E27D2376B00DDE299 /* BirthdayReminder.xcdatamodeld */; };
 		C86243EA27E53665006A5B4E /* ForDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243E927E53665006A5B4E /* ForDate.swift */; };
 		C86243EC27E53F2D006A5B4E /* ForUITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243EB27E53F2D006A5B4E /* ForUITextField.swift */; };
-		C86243F127E6384F006A5B4E /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243EF27E6384F006A5B4E /* Person+CoreDataClass.swift */; };
-		C86243F227E6384F006A5B4E /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243F027E6384F006A5B4E /* Person+CoreDataProperties.swift */; };
+		C86243F627F2352E006A5B4E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243F527F2352E006A5B4E /* DetailViewController.swift */; };
+		C86243F827F30FD4006A5B4E /* ForUIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86243F727F30FD4006A5B4E /* ForUIViewController.swift */; };
+		C862440827F64856006A5B4E /* ForUIimage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440727F64855006A5B4E /* ForUIimage.swift */; };
+		C862440B27F72CE0006A5B4E /* Person+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */; };
+		C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */; };
+		C862440E27FA394F006A5B4E /* ForString.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440D27FA394F006A5B4E /* ForString.swift */; };
+		C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862440F27FCD911006A5B4E /* CellsProtocols.swift */; };
+		C862441227FF0D8B006A5B4E /* PersonsCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +40,14 @@
 		C83EBF7F27D2376B00DDE299 /* BirthdayReminder.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BirthdayReminder.xcdatamodel; sourceTree = "<group>"; };
 		C86243E927E53665006A5B4E /* ForDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForDate.swift; sourceTree = "<group>"; };
 		C86243EB27E53F2D006A5B4E /* ForUITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForUITextField.swift; sourceTree = "<group>"; };
-		C86243EF27E6384F006A5B4E /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
-		C86243F027E6384F006A5B4E /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C86243F527F2352E006A5B4E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C86243F727F30FD4006A5B4E /* ForUIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForUIViewController.swift; sourceTree = "<group>"; };
+		C862440727F64855006A5B4E /* ForUIimage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForUIimage.swift; sourceTree = "<group>"; };
+		C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Person+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C862440D27FA394F006A5B4E /* ForString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForString.swift; sourceTree = "<group>"; };
+		C862440F27FCD911006A5B4E /* CellsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsProtocols.swift; sourceTree = "<group>"; };
+		C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonsCoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				C83A547F279038F500E88F83 /* UserTableViewCell.swift */,
+				C862440F27FCD911006A5B4E /* CellsProtocols.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -93,8 +106,9 @@
 		C83EBF7B27BB02FC00DDE299 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C83A547D278DC0F200E88F83 /* AddingBirthdayViewController.swift */,
 				C83A547B278DBC1600E88F83 /* TableOfBirthdaysViewController.swift */,
+				C83A547D278DC0F200E88F83 /* AddingBirthdayViewController.swift */,
+				C86243F527F2352E006A5B4E /* DetailViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -102,8 +116,9 @@
 		C83EBF8527D57FD200DDE299 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C86243EF27E6384F006A5B4E /* Person+CoreDataClass.swift */,
-				C86243F027E6384F006A5B4E /* Person+CoreDataProperties.swift */,
+				C862440927F72CE0006A5B4E /* Person+CoreDataClass.swift */,
+				C862440A27F72CE0006A5B4E /* Person+CoreDataProperties.swift */,
+				C862441127FF0D8B006A5B4E /* PersonsCoreDataManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -113,6 +128,9 @@
 			children = (
 				C86243E927E53665006A5B4E /* ForDate.swift */,
 				C86243EB27E53F2D006A5B4E /* ForUITextField.swift */,
+				C86243F727F30FD4006A5B4E /* ForUIViewController.swift */,
+				C862440727F64855006A5B4E /* ForUIimage.swift */,
+				C862440D27FA394F006A5B4E /* ForString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -187,16 +205,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C86243F827F30FD4006A5B4E /* ForUIViewController.swift in Sources */,
+				C86243F627F2352E006A5B4E /* DetailViewController.swift in Sources */,
 				C83A547C278DBC1600E88F83 /* TableOfBirthdaysViewController.swift in Sources */,
 				C83A5468278DA83100E88F83 /* AppDelegate.swift in Sources */,
+				C862440827F64856006A5B4E /* ForUIimage.swift in Sources */,
 				C83EBF8027D2376B00DDE299 /* BirthdayReminder.xcdatamodeld in Sources */,
 				C83A547E278DC0F200E88F83 /* AddingBirthdayViewController.swift in Sources */,
+				C862440B27F72CE0006A5B4E /* Person+CoreDataClass.swift in Sources */,
+				C862440E27FA394F006A5B4E /* ForString.swift in Sources */,
 				C83A546A278DA83100E88F83 /* SceneDelegate.swift in Sources */,
-				C86243F127E6384F006A5B4E /* Person+CoreDataClass.swift in Sources */,
+				C862440C27F72CE0006A5B4E /* Person+CoreDataProperties.swift in Sources */,
 				C86243EA27E53665006A5B4E /* ForDate.swift in Sources */,
-				C86243F227E6384F006A5B4E /* Person+CoreDataProperties.swift in Sources */,
 				C86243EC27E53F2D006A5B4E /* ForUITextField.swift in Sources */,
 				C83A5480279038F500E88F83 /* UserTableViewCell.swift in Sources */,
+				C862441027FCD911006A5B4E /* CellsProtocols.swift in Sources */,
+				C862441227FF0D8B006A5B4E /* PersonsCoreDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,11 +7,17 @@
 
 import UIKit
 
+extension UserTableViewCell: ReusableView { }
+
 class UserTableViewCell: UITableViewCell {
     
-    static let identifier = "CustomCellIdentifier"
+    let personsPhoto: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
     
-    let name: UILabel = {
+    let personsName: UILabel = {
         let label = UILabel()
         label.backgroundColor = .lightGray
         label.textAlignment = .center
@@ -19,7 +25,7 @@ class UserTableViewCell: UITableViewCell {
         return label
     }()
     
-    let dayOfBirthday: UILabel = {
+    let personsDayOfBirthday: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.backgroundColor = .lightGray
@@ -28,7 +34,7 @@ class UserTableViewCell: UITableViewCell {
         return label
     }()
     
-    let ageOfPerson: UILabel = {
+    let personsAge: UILabel = {
         let label = UILabel()
         label.backgroundColor = .lightGray
         label.textAlignment = .center
@@ -41,35 +47,42 @@ class UserTableViewCell: UITableViewCell {
         
         addSubviews()
         setupConstraints()
+        self.selectionStyle = .none
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     func updateUI(person: Person) {
-        name.text = person.name
-        ageOfPerson.text = String(calculateAge(birthday: person.dayOfBirthday!))
-        
-        let days = calculateDaysLeft(birthday: person.dayOfBirthday!)
+        if let image = UIImage().create(data: person.image) {
+            personsPhoto.image = image
+        }
+        personsName.text = person.name
+        if let date = person.dayOfBirthday {
+            personsAge.text = String(calculateAge(birthday: date))
+            personsDayOfBirthday.text = "\(date.toString(dateFormat: "dd-MM-yyyy")),  \(checkIfBirthday(date: date))"
+        }
+    }
+    
+    func checkIfBirthday(date: Date) -> String {
+        let days = calculateDaysLeft(birthday: date)
         
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: .now)
-        var status = ""
         if (ageComponents.isLeapMonth ?? false && days == 366) {
-            status = "Happy Birthday"
+            return "Happy Birthday"
         } else if (!ageComponents.isLeapMonth! && days == 365) {
-            status = "Happy Birthday"
+            return "Happy Birthday"
         } else {
-            status = "\(days) days left"
+            return "\(days) days left"
         }
-        
-        dayOfBirthday.text = "\(person.dayOfBirthday?.toString(dateFormat: "dd-MM-yyyy") ?? ""),  \(status)"
     }
     
     func addSubviews() {
-        contentView.addSubview(name)
-        contentView.addSubview(dayOfBirthday)
-        contentView.addSubview(ageOfPerson)
+        contentView.addSubview(personsName)
+        contentView.addSubview(personsDayOfBirthday)
+        contentView.addSubview(personsAge)
+        contentView.addSubview(personsPhoto)
     }
     
     func calculateAge(birthday: Date) -> Int {
@@ -93,8 +106,9 @@ class UserTableViewCell: UITableViewCell {
         return diff.day ?? 0
     }
 }
+
     // MARK: Constraints
-extension UserTableViewCell {
+private extension UserTableViewCell {
     func addCornerRadius(name: UIView) {
         name.layoutIfNeeded()
         name.layer.cornerRadius = name.frame.height/1.5
@@ -102,23 +116,30 @@ extension UserTableViewCell {
     }
     func setupConstraints() {
         
-        name.setNeedsDisplay()
-        name.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30).isActive = true
-        name.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3).isActive = true
-        name.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 7/10).isActive = true
-        name.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 4/10).isActive = true
-        addCornerRadius(name: name)
+        personsPhoto.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
+        personsPhoto.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3).isActive = true
+        personsPhoto.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        personsPhoto.widthAnchor.constraint(equalTo: personsPhoto.heightAnchor).isActive = true
+        personsPhoto.layoutIfNeeded()
+        personsPhoto.layer.cornerRadius = personsPhoto.frame.height/2
+        personsPhoto.layer.masksToBounds = true
         
-        dayOfBirthday.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 30).isActive = true
-        dayOfBirthday.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -3).isActive = true
-        dayOfBirthday.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30).isActive = true
-        dayOfBirthday.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 5/10).isActive = true
-        addCornerRadius(name: dayOfBirthday)
+        personsName.leadingAnchor.constraint(equalTo: personsPhoto.trailingAnchor, constant: 3).isActive = true
+        personsName.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3).isActive = true
+        personsName.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 4/10).isActive = true
+        addCornerRadius(name: personsName)
         
-        ageOfPerson.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -30).isActive = true
-        ageOfPerson.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3).isActive = true
-        ageOfPerson.leadingAnchor.constraint(equalTo: name.trailingAnchor, constant: 3).isActive = true
-        ageOfPerson.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 4/10).isActive = true
-        addCornerRadius(name: ageOfPerson)
+        personsDayOfBirthday.leadingAnchor.constraint(equalTo: personsPhoto.trailingAnchor, constant: 3).isActive = true
+        personsDayOfBirthday.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -3).isActive = true
+        personsDayOfBirthday.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
+        personsDayOfBirthday.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 5/10).isActive = true
+        addCornerRadius(name: personsDayOfBirthday)
+        
+        personsAge.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        personsAge.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 3).isActive = true
+        personsAge.leadingAnchor.constraint(equalTo: personsName.trailingAnchor, constant: 3).isActive = true
+        personsAge.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 4/10).isActive = true
+        personsAge.widthAnchor.constraint(equalTo: personsAge.heightAnchor).isActive = true
+        addCornerRadius(name: personsAge)
     }
 }

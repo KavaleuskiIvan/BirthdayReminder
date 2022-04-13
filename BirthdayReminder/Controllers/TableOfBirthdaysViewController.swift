@@ -11,8 +11,6 @@ import CoreData
 
 class TableOfBirthdaysViewController: UIViewController {
     
-    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    
     let tableView = UITableView()
     
     var persons:[Person] = []
@@ -30,14 +28,23 @@ class TableOfBirthdaysViewController: UIViewController {
         
         tableView.dataSource = self
         tableView.delegate = self
-        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.identifier)
+        self.tableView.register(UserTableViewCell.self, forCellReuseIdentifier: UserTableViewCell.reuseIdentifier)
+        tableView.separatorStyle = .none
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        fetchPersons()
-        tableView.reloadData()
+        DispatchQueue.main.async {
+            PersonsCoreDataManager.shared.fetchPersons { [weak self] result in
+                switch result {
+                case .success(let _persons):
+                    self?.persons = _persons
+                case .failure(let error):
+                    print(error)
+                }
+            }
+            self.tableView.reloadData()
+        }
     }
     
     func launchAddButton() {
@@ -49,38 +56,16 @@ class TableOfBirthdaysViewController: UIViewController {
         let addingBirthdayVC = AddingBirthdayViewController()
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
     }
-
-    func fetchPersons() {
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
-        do {
-            persons = try context.fetch(fetchRequest)
-        } catch {
-            print("🔴Could not fetch: \(error.localizedDescription)")
-        }
-    }
-    func deletePersons(atIndexPath indexPath: IndexPath) {
-        let context = appDelegate.persistentContainer.viewContext
-        
-        context.delete(persons[indexPath.row])
-        
-        do {
-            try context.save()
-        } catch {
-            print("🔴Could not save while delete: \(error.localizedDescription)")
-        }
-    }
 }
 
-// MARK: - Table view data source
+    // MARK: - Table view data source
 extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return persons.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.identifier, for: indexPath) as! UserTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserTableViewCell.reuseIdentifier, for: indexPath) as! UserTableViewCell
         let _persons = persons[indexPath.row]
         cell.updateUI(person: _persons)
         return cell
@@ -88,17 +73,30 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            self.deletePersons(atIndexPath: indexPath)
-            self.fetchPersons()
+            PersonsCoreDataManager.shared.deletePersons(personsArray: persons, atIndexPath: indexPath)
+            PersonsCoreDataManager.shared.fetchPersons { [weak self] result in
+                switch result {
+                case .success(let _persons):
+                    self?.persons = _persons
+                case .failure(let error):
+                    print(error)
+                }
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let detailViewController = DetailViewController()
+        guard let personsId = persons[indexPath.row].id else { return }
+        detailViewController.personID = personsId
+        navigationController?.pushViewController(detailViewController, animated: true)
+    }
 }
     // MARK: Constraints
-extension TableOfBirthdaysViewController {
+private extension TableOfBirthdaysViewController {
     func addSubviews() {
         view.addSubview(tableView)
     }
