@@ -35,7 +35,6 @@ class TableOfBirthdaysViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
-//            self.fetchPersons()
             PersonsCoreDataManager.shared.fetchPersons { [weak self] result in
                 switch result {
                 case .success(let _persons):
@@ -57,29 +56,6 @@ class TableOfBirthdaysViewController: UIViewController {
         let addingBirthdayVC = AddingBirthdayViewController()
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
     }
-    // MARK: Database functions
-    /*
-    func fetchPersons() {
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
-        do {
-            persons = try context.fetch(fetchRequest)
-        } catch {
-            print("🔴Could not fetch: \(error.localizedDescription)")
-        }
-    }
-    func deletePersons(atIndexPath indexPath: IndexPath) {
-        let context = appDelegate.persistentContainer.viewContext
-        
-        context.delete(persons[indexPath.row])
-        
-        do {
-            try context.save()
-        } catch {
-            print("🔴Could not save while delete: \(error.localizedDescription)")
-        }
-    }*/
 }
 
     // MARK: - Table view data source
@@ -106,8 +82,6 @@ extension TableOfBirthdaysViewController: UITableViewDelegate, UITableViewDataSo
                     print(error)
                 }
             }
-//            self.deletePersons(atIndexPath: indexPath)
-//            self.fetchPersons()
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }

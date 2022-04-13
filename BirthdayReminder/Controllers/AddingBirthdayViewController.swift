@@ -134,11 +134,6 @@ class AddingBirthdayViewController: UIViewController {
     // Setup add information button
     @objc func addButtonAction() {
         if nameTF.text != ""{
-            //            savePerson { finished in
-            //                if finished {
-            //                    navigationController?.popViewController(animated: true)
-            //                }
-            //            }
             PersonsCoreDataManager.shared.savePerson(personName: nameTF.text ?? "",
                                                      persondayOfBirthday: datePicker.date,
                                                      personImage: personsPhoto.image!)
@@ -146,30 +141,6 @@ class AddingBirthdayViewController: UIViewController {
             navigationController?.popViewController(animated: true)
         }
     }
-    
-    // MARK: Database function
-    /*
-    func savePerson(completion: (_ finished: Bool) -> ()) {
-        
-        let context = appDelegate.persistentContainer.viewContext
-        
-        guard let entity = NSEntityDescription.entity(forEntityName: "Person", in: context) else { return }
-        
-        let person = Person(entity: entity, insertInto: context)
-        
-        person.id = UUID.init()
-        person.name = nameTF.text
-        person.dayOfBirthday = datePicker.date
-        person.image = personsPhoto.image?.jpegData(compressionQuality: 1)
-        
-        do {
-            try context.save()
-            completion(true)
-        } catch let error as NSError {
-            print(error.localizedDescription)
-            completion(false)
-        }
-    }*/
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         view.endEditing(true)

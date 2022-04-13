@@ -76,7 +76,6 @@ class DetailViewController: UIViewController {
         addSubviews()
         setupConstraints()
         
-//        fetchPerson()
         PersonsCoreDataManager.shared.fetchPerson(withID: personID) { [weak self] result in
             switch result {
             case .success(let _person):
@@ -104,7 +103,6 @@ class DetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
     }
     @objc func backButtonPressed() {
-//        updatePerson()
         PersonsCoreDataManager.shared.updatePerson(person: person,
                                                    name: personsNameTextLabel.text ?? "",
                                                    dayOfBirthday: personsDayOfBirthdayTextLabel.text?.toDate(withFormat: "dd-MM-yyyy") ?? .now,
@@ -213,46 +211,6 @@ class DetailViewController: UIViewController {
             print("Error Camera")
         }
     }
-    // MARK: Database functions
-    /*
-    func fetchPerson(){
-        let context = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<Person>(entityName: "Person")
-        fetchRequest.predicate = NSPredicate(format: "id = %@", personID.uuidString)
-        
-        do {
-            let results = try context.fetch(fetchRequest)
-            person = results.first
-        } catch {
-            print("🔴Could not fetch: \(error.localizedDescription)")
-        }
-    }
-    func updatePerson() {
-        let context = appDelegate.persistentContainer.viewContext
-        guard let _person = person else { return }
-        
-        _person.setValue(personsNameTextLabel.text, forKey: "name")
-        _person.setValue(personsDayOfBirthdayTextLabel.text?.toDate(withFormat: "dd-MM-yyyy"), forKey: "dayOfBirthday")
-        _person.setValue(personsPhoto.image?.jpegData(compressionQuality: 1), forKey: "image")
-        
-        do {
-            try context.save()
-        } catch {
-            print("🔴Could not save while delete: \(error.localizedDescription)")
-        }
-    }
-    func deletePerson() {
-        let context = appDelegate.persistentContainer.viewContext
-        guard let _person = person else { return }
-        context.delete(_person)
-        
-        do {
-            try context.save()
-        } catch {
-            print("🔴Could not save while delete: \(error.localizedDescription)")
-        }
-    }*/
 }
 
 // MARK: UIImagePickerControllerDelegate, UINavigationControllerDelegate
