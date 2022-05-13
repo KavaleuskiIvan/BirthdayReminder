@@ -179,7 +179,6 @@ class DetailViewController: UIViewController {
         settingsAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [weak self] _ in
             let deleteAlert = UIAlertController(title: "You want to delete this person?", message: "", preferredStyle: .alert)
             let acceptAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-//                self?.deletePerson()
                 PersonsCoreDataManager.shared.deletePerson(person: self?.person)
                 self?.navigationController?.popViewController(animated: true)
             })

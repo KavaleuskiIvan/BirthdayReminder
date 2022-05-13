@@ -59,13 +59,13 @@ class UserTableViewCell: UITableViewCell {
         }
         personsName.text = person.name
         if let date = person.dayOfBirthday {
-            personsAge.text = String(calculateAge(birthday: date))
+            personsAge.text = String(UtilsForBirthdayCalculating.shared.calculateAge(birthday: date))
             personsDayOfBirthday.text = "\(date.toString(dateFormat: "dd-MM-yyyy")),  \(checkIfBirthday(date: date))"
         }
     }
     
     func checkIfBirthday(date: Date) -> String {
-        let days = calculateDaysLeft(birthday: date)
+        let days = UtilsForBirthdayCalculating.shared.calculateDaysLeft(birthday: date)
         
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: .now)
@@ -83,27 +83,6 @@ class UserTableViewCell: UITableViewCell {
         contentView.addSubview(personsDayOfBirthday)
         contentView.addSubview(personsAge)
         contentView.addSubview(personsPhoto)
-    }
-    
-    func calculateAge(birthday: Date) -> Int {
-        let now = Date()
-        let calendar = Calendar.current
-        
-        let ageComponents = calendar.dateComponents([.year], from: birthday, to: now)
-        let age = ageComponents.year!
-        return age
-    }
-    
-    func calculateDaysLeft(birthday: Date) -> Int {
-        let calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let dayAndMonth = calendar.dateComponents([.day, .month], from: birthday)
-        let nextBirthDay = calendar.nextDate(after: today,
-                                             matching: dayAndMonth,
-                                             matchingPolicy: .nextTimePreservingSmallerComponents)!
-        
-        let diff = calendar.dateComponents([.day], from: today, to: nextBirthDay)
-        return diff.day ?? 0
     }
 }
 

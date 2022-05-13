@@ -15,6 +15,8 @@ class TableOfBirthdaysViewController: UIViewController {
     
     var persons:[Person] = []
     
+    let filterPersonsClass = FilterForPersons.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +24,7 @@ class TableOfBirthdaysViewController: UIViewController {
         self.navigationItem.title = "Birthdays Table"
         
         launchAddButton()
+        launchFilterButton()
         
         addSubviews()
         setupTableView()
@@ -43,7 +46,11 @@ class TableOfBirthdaysViewController: UIViewController {
                     print(error)
                 }
             }
+            self.persons = self.filterPersonsClass.checkingWhichFilter(persons: self.persons)
             self.tableView.reloadData()
+            if self.persons.first != nil {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
@@ -55,6 +62,42 @@ class TableOfBirthdaysViewController: UIViewController {
     @objc private func didTapAddButton() {
         let addingBirthdayVC = AddingBirthdayViewController()
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
+    }
+    
+    func launchFilterButton() {
+        let filterButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"),
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(didTapFilterButton))
+        self.navigationItem.leftBarButtonItem = filterButton
+    }
+    
+    @objc func didTapFilterButton() {
+        let filterAlert = UIAlertController(title: "Filter", message: "Sort by", preferredStyle: .actionSheet)
+        let byNameAction = UIAlertAction(title: "Name", style: .default, handler: { [weak self] (alert) in
+            guard let self = self else { return }
+            
+            self.persons = self.filterPersonsClass.filterPersonsByName(persons: self.persons)
+            self.filterPersonsClass.userDefaults.set(FilterForPersons.Filters.byName, forKey: FilterForPersons.FiltersKeys.filteredBy)
+            self.tableView.reloadData()
+        })
+        let byAgeAction = UIAlertAction(title: "Age", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.persons = self.filterPersonsClass.filterPersonsByAge(persons: self.persons)
+            self.filterPersonsClass.userDefaults.set(FilterForPersons.Filters.byAge, forKey: FilterForPersons.FiltersKeys.filteredBy)
+            self.tableView.reloadData()
+        })
+        let byDayOfBirthdayAction = UIAlertAction(title: "Day of Birthday", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.persons = self.filterPersonsClass.filterPersonsByDayOfBirthday(persons: self.persons)
+            self.filterPersonsClass.userDefaults.set(FilterForPersons.Filters.byDayOfBirthday, forKey: FilterForPersons.FiltersKeys.filteredBy)
+            self.tableView.reloadData()
+        })
+        filterAlert.addAction(byNameAction)
+        filterAlert.addAction(byAgeAction)
+        filterAlert.addAction(byDayOfBirthdayAction)
+        filterAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+        self.present(filterAlert, animated: true, completion: nil)
     }
 }
 
