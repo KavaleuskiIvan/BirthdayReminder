@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C81D957B280ACDB800294502 /* FilterForPersons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81D957A280ACDB800294502 /* FilterForPersons.swift */; };
+		C81D957B280ACDB800294502 /* SortForPersons.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81D957A280ACDB800294502 /* SortForPersons.swift */; };
 		C81D9581280ADBA500294502 /* UtilsForBirthdayCalculating.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81D9580280ADBA500294502 /* UtilsForBirthdayCalculating.swift */; };
 		C83A5468278DA83100E88F83 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A5467278DA83100E88F83 /* AppDelegate.swift */; };
 		C83A546A278DA83100E88F83 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83A5469278DA83100E88F83 /* SceneDelegate.swift */; };
@@ -30,7 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C81D957A280ACDB800294502 /* FilterForPersons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterForPersons.swift; sourceTree = "<group>"; };
+		C81D957A280ACDB800294502 /* SortForPersons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortForPersons.swift; sourceTree = "<group>"; };
 		C81D9580280ADBA500294502 /* UtilsForBirthdayCalculating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsForBirthdayCalculating.swift; sourceTree = "<group>"; };
 		C83A5464278DA83100E88F83 /* BirthdayReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BirthdayReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C83A5467278DA83100E88F83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,7 +68,7 @@
 		C81D9579280ACD7700294502 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C81D957A280ACDB800294502 /* FilterForPersons.swift */,
+				C81D957A280ACDB800294502 /* SortForPersons.swift */,
 				C81D9580280ADBA500294502 /* UtilsForBirthdayCalculating.swift */,
 			);
 			path = Classes;
@@ -222,7 +222,7 @@
 				C86243F827F30FD4006A5B4E /* ForUIViewController.swift in Sources */,
 				C86243F627F2352E006A5B4E /* DetailViewController.swift in Sources */,
 				C81D9581280ADBA500294502 /* UtilsForBirthdayCalculating.swift in Sources */,
-				C81D957B280ACDB800294502 /* FilterForPersons.swift in Sources */,
+				C81D957B280ACDB800294502 /* SortForPersons.swift in Sources */,
 				C83A547C278DBC1600E88F83 /* TableOfBirthdaysViewController.swift in Sources */,
 				C83A5468278DA83100E88F83 /* AppDelegate.swift in Sources */,
 				C862440827F64856006A5B4E /* ForUIimage.swift in Sources */,
@@ -385,6 +385,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -413,6 +414,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

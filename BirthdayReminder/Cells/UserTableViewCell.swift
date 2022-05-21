@@ -53,19 +53,24 @@ class UserTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func calculateDaysLeft(date: Date) -> Int {
+        let days = UtilsForBirthdayCalculating.calculateDaysLeft(birthday: date)
+        return days
+    }
+    
     func updateUI(person: Person) {
         if let image = UIImage().create(data: person.image) {
             personsPhoto.image = image
         }
         personsName.text = person.name
         if let date = person.dayOfBirthday {
-            personsAge.text = String(UtilsForBirthdayCalculating.shared.calculateAge(birthday: date))
+            personsAge.text = String(calculateDaysLeft(date: date))
             personsDayOfBirthday.text = "\(date.toString(dateFormat: "dd-MM-yyyy")),  \(checkIfBirthday(date: date))"
         }
     }
     
     func checkIfBirthday(date: Date) -> String {
-        let days = UtilsForBirthdayCalculating.shared.calculateDaysLeft(birthday: date)
+        let days = calculateDaysLeft(date: date)
         
         let calendar = Calendar.current
         let ageComponents = calendar.dateComponents([.year], from: .now)

@@ -7,12 +7,10 @@
 
 import Foundation
 
-class UtilsForBirthdayCalculating {
+enum UtilsForBirthdayCalculating {
     
-    static let shared = UtilsForBirthdayCalculating()
-    private init() {}
     
-    func calculateAge(birthday: Date) -> Int {
+    static func calculateAge(birthday: Date) -> Int {
         let now = Date()
         let calendar = Calendar.current
         
@@ -21,7 +19,7 @@ class UtilsForBirthdayCalculating {
         return age
     }
     
-    func calculateDaysLeft(birthday: Date) -> Int {
+    static func calculateDaysLeft(birthday: Date) -> Int {
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         let dayAndMonth = calendar.dateComponents([.day, .month], from: birthday)
