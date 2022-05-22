@@ -9,6 +9,6 @@ When you click on a user, you can view the added information, as well as change 
 
 <img class="animated-gif" src="https://user-images.githubusercontent.com/97702399/168380708-45da4fd4-d826-47f7-91ee-4bd7fb18a363.gif" height="500" >
 
-You can also filter users, as well as quickly delete them with a swipe.
+You can also sort users, as well as quickly delete them with a swipe.
 
 <img class="animated-gif" src="https://user-images.githubusercontent.com/97702399/168381080-c50c8fc6-5d76-432f-aa9b-9fb0b60089c6.gif" height="500" >
