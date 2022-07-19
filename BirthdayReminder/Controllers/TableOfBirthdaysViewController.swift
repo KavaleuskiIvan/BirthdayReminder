@@ -77,19 +77,19 @@ class TableOfBirthdaysViewController: UIViewController {
         let byNameAction = UIAlertAction(title: "Name", style: .default, handler: { [weak self] (alert) in
             guard let self = self else { return }
             self.persons = self.persons.sort(byType: .name)
-            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byName, forKey: SortForPersons.FiltersKeys.filteredBy)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byName, forKey: SortForPersons.SortersKeys.sortedBy)
             self.tableView.reloadData()
         })
         let byAgeAction = UIAlertAction(title: "Age", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             self.persons = self.persons.sort(byType: .age)
-            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byAge, forKey: SortForPersons.FiltersKeys.filteredBy)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byAge, forKey: SortForPersons.SortersKeys.sortedBy)
             self.tableView.reloadData()
         })
         let byDayOfBirthdayAction = UIAlertAction(title: "Day of Birthday", style: .default, handler: { [weak self] _ in
             guard let self = self else { return }
             self.persons = self.persons.sort(byType: .dayOfBirthday)
-            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byDayOfBirthday, forKey: SortForPersons.FiltersKeys.filteredBy)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byDayOfBirthday, forKey: SortForPersons.SortersKeys.sortedBy)
             self.tableView.reloadData()
         })
         sortAlert.addAction(byNameAction)

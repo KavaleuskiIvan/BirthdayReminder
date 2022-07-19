@@ -9,7 +9,6 @@ import Foundation
 
 enum UtilsForBirthdayCalculating {
     
-    
     static func calculateAge(birthday: Date) -> Int {
         let now = Date()
         let calendar = Calendar.current

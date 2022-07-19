@@ -15,7 +15,7 @@ class SortForPersons {
     let userDefaults = UserDefaults.standard
     
     func checkingWhichSortType(persons: [Person]) -> [Person] {
-        let userDefValue = userDefaults.string(forKey: FiltersKeys.filteredBy)
+        let userDefValue = userDefaults.string(forKey: SortersKeys.sortedBy)
         if userDefValue == Sorters.byName {
             let filteredPersons = persons.sort(byType: .name)
             return filteredPersons
@@ -37,8 +37,8 @@ class SortForPersons {
         static var byAge: String = "byAge"
     }
     
-    struct FiltersKeys {
-        static let filteredBy = "filteredBy"
+    enum SortersKeys {
+        static let sortedBy = "sortedBy"
     }
 }
 
