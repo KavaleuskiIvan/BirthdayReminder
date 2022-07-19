@@ -15,6 +15,8 @@ class TableOfBirthdaysViewController: UIViewController {
     
     var persons:[Person] = []
     
+    let sortPersonsClass = SortForPersons.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -22,6 +24,7 @@ class TableOfBirthdaysViewController: UIViewController {
         self.navigationItem.title = "Birthdays Table"
         
         launchAddButton()
+        launchSortButton()
         
         addSubviews()
         setupTableView()
@@ -43,7 +46,11 @@ class TableOfBirthdaysViewController: UIViewController {
                     print(error)
                 }
             }
+            self.persons = self.sortPersonsClass.checkingWhichSortType(persons: self.persons)
             self.tableView.reloadData()
+            if self.persons.first != nil {
+                self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            }
         }
     }
     
@@ -55,6 +62,41 @@ class TableOfBirthdaysViewController: UIViewController {
     @objc private func didTapAddButton() {
         let addingBirthdayVC = AddingBirthdayViewController()
         navigationController?.pushViewController(addingBirthdayVC, animated: true)
+    }
+    
+    func launchSortButton() {
+        let sortButton = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"),
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(didTapSortButton))
+        self.navigationItem.leftBarButtonItem = sortButton
+    }
+    
+    @objc func didTapSortButton() {
+        let sortAlert = UIAlertController(title: "Sort", message: "Sort by", preferredStyle: .actionSheet)
+        let byNameAction = UIAlertAction(title: "Name", style: .default, handler: { [weak self] (alert) in
+            guard let self = self else { return }
+            self.persons = self.persons.sort(byType: .name)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byName, forKey: SortForPersons.SortersKeys.sortedBy)
+            self.tableView.reloadData()
+        })
+        let byAgeAction = UIAlertAction(title: "Age", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.persons = self.persons.sort(byType: .age)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byAge, forKey: SortForPersons.SortersKeys.sortedBy)
+            self.tableView.reloadData()
+        })
+        let byDayOfBirthdayAction = UIAlertAction(title: "Day of Birthday", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.persons = self.persons.sort(byType: .dayOfBirthday)
+            self.sortPersonsClass.userDefaults.set(SortForPersons.Sorters.byDayOfBirthday, forKey: SortForPersons.SortersKeys.sortedBy)
+            self.tableView.reloadData()
+        })
+        sortAlert.addAction(byNameAction)
+        sortAlert.addAction(byAgeAction)
+        sortAlert.addAction(byDayOfBirthdayAction)
+        sortAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in }))
+        self.present(sortAlert, animated: true, completion: nil)
     }
 }
 

@@ -13,6 +13,8 @@ class AddingBirthdayViewController: UIViewController {
     let datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         picker.backgroundColor = .lightGray
+        picker.locale = .autoupdatingCurrent
+        picker.maximumDate = Date.now
         picker.translatesAutoresizingMaskIntoConstraints = false
         return picker
     }()
